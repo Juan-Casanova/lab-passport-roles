@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const User = require('../models/User');
-const bcrypt = require('bcrypt');
 const passport = require('passport');
 
 function isAuthenticated(req, res, next) {
@@ -57,12 +56,23 @@ router.post('/signup', (req, res, next) => {
 
 })
 
-router.delete('/boss', (req, res, next) => {
+router.post('/private', (req, res, next) => {
 
   User.register(req.body, req.body.password)
-    .then(user => res.redirect('/boss'))
+    .then(user => res.redirect('login'))
     .catch(e => next(e));
 
+
 })
+
+router.delete('/private', (req, res, next) => {
+
+  User.register(req.body, req.body.username)
+    .then(user => res.redirect('login'))
+    .catch(e => next(e));
+
+
+})
+
 
 module.exports = router;
